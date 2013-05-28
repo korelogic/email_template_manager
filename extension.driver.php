@@ -113,6 +113,12 @@
 				$template->addParams(Array("etm-entry-id"=>$context['entry']->get('id')));
 				Symphony::Engine()->Page()->_param["etm-entry-id"] = $context['entry']->get('id');
 				$xml = $template->processDatasources();
+				
+				//Add POST as page parameters
+				foreach($context['fields'] as $field => $val){
+					$template->addParams(Array("etm-post-".$field => $val));
+					Symphony::Engine()->Page()->_param["etm-post-".$field] = $val;
+				}
 
 				$about = $context['event']->about();
 				General::array_to_xml($xml, Array("events"=>Array($about['name'] => Array("post-values" =>$context['fields']))));
